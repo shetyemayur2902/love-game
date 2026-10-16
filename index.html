@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Love Meter for Namrata ❤️</title>
+    <title>For Namrata ❤️ By Mayur</title>
+    <!-- Canvas Confetti for Celebration Explosions -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #feada6 100%);
             color: #4a4a4a;
             margin: 0;
             padding: 20px;
@@ -16,201 +18,281 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating Background Hearts Animation */
+        .heart-particle {
+            position: fixed;
+            color: rgba(255, 71, 87, 0.4);
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp 4s linear infinite;
+            z-index: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.4) rotate(360deg); opacity: 0; }
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px 20px;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.25);
+            position: relative;
+            z-index: 10;
+            border: 2px solid #ffffff;
         }
 
         h1 { color: #ff4757; margin-bottom: 5px; font-size: 2.2em; }
         .subtitle { font-size: 1.05em; color: #747d8c; margin-bottom: 25px; }
 
-        /* Game Screen */
-        #game-screen { display: block; }
-        #surprise-screen { display: none; }
+        /* Stage Management */
+        .stage { display: none; }
+        .stage.active { display: block; animation: popIn 0.5s ease-out; }
 
-        /* Love Meter Styling */
-        .meter-box {
-            background: #fff0f3;
-            border: 2px dashed #ff4757;
-            border-radius: 15px;
-            padding: 20px;
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Animated Gift Box Stage 1 */
+        .gift-box {
+            font-size: 80px;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s ease;
+            animation: bounce 1.2s infinite alternate;
+            user-select: none;
             margin: 20px 0;
         }
-        .progress-bar-container {
-            width: 100%;
-            background: #ffe3e8;
-            border-radius: 20px;
-            height: 25px;
-            margin: 15px 0;
-            overflow: hidden;
-            border: 1px solid #ff4757;
-        }
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #ff4757;
-            transition: width 0.3s ease;
-            border-radius: 20px;
+        .gift-box:active { transform: scale(0.85) !important; }
+        @keyframes bounce {
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-15px) rotate(3deg); }
         }
 
-        #tap-game-btn {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-            transition: 0.1s;
-        }
-        #tap-game-btn:active { transform: scale(0.95); }
-
-        #tease-message {
-            font-weight: bold;
-            color: #2f3542;
-            min-height: 30px;
-            margin-top: 15px;
-            font-size: 1.1em;
-        }
-
-        /* Surprise Photo Gallery */
-        .gallery {
+        /* Animated Doodle Art Cards */
+        .card-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-top: 20px;
+            margin: 20px 0;
         }
-        .polaroid {
-            background: white;
-            padding: 10px 10px 15px 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border-radius: 8px;
-            transform: rotate(-1deg);
+        .art-card {
+            background: #ffffff;
+            border: 2px solid #ffd8e1;
+            border-radius: 18px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        .polaroid:nth-child(even) { transform: rotate(2deg); }
-        .polaroid img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 6px;
+        .art-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            border-color: #ff4757;
+            box-shadow: 0 12px 25px rgba(255, 71, 87, 0.2);
         }
-        .polaroid p {
-            margin: 8px 0 0;
-            font-size: 0.85em;
+        .art-icon {
+            font-size: 45px;
+            margin-bottom: 8px;
+            display: block;
+            animation: pulseIcon 2s infinite alternate;
+        }
+        @keyframes pulseIcon {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+        .art-card p {
+            margin: 0;
             font-weight: bold;
             color: #2f3542;
+            font-size: 0.95em;
         }
 
-        .final-letter {
+        /* Interactive Coupon Section */
+        .coupon-btn {
             background: #fff0f3;
-            border: 1px solid #ff4757;
-            padding: 15px;
-            border-radius: 12px;
+            border: 2px dashed #ff4757;
+            padding: 14px;
+            border-radius: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #2f3542;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .coupon-btn:hover {
+            background: #ff4757;
+            color: white;
+            border-style: solid;
+        }
+
+        /* General Buttons */
+        .action-btn {
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+            transition: 0.2s;
+            margin-top: 15px;
+        }
+        .action-btn:hover { transform: scale(1.05); }
+
+        .letter-box {
+            background: #fff0f3;
+            border: 2px solid #ff4757;
+            padding: 20px;
+            border-radius: 18px;
             margin-top: 20px;
-            font-size: 1em;
+            text-align: left;
+            line-height: 1.6;
             color: #2f3542;
         }
     </style>
 </head>
 <body>
 
+    <!-- Floating Background Hearts -->
+    <script>
+        for(let i=0; i<18; i++) {
+            let heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.innerHTML = ['❤️', '💖', '✨', '🌸', '💕'][Math.floor(Math.random()*5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 4 + 's';
+            heart.style.fontSize = (16 + Math.random() * 16) + 'px';
+            document.body.appendChild(heart);
+        }
+    </script>
+
     <div class="container">
-        <!-- GAME SCREEN: Tap to fill love meter -->
-        <div id="game-screen">
+        
+        <!-- STAGE 1: Tap to Open Surprise Gift -->
+        <div id="stage-1" class="stage active">
             <h1>Hey Namrata! 💕</h1>
-            <p class="subtitle">Mayur built a tiny game just for you. Can you fill the Love Meter?</p>
-
-            <div class="meter-box">
-                <p style="margin: 0; font-weight: bold; color: #ff4757;">Love Level: <span id="percentage">0</span>%</p>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                <p id="tease-message">Tap the button below to send love to Mayur!</p>
-            </div>
-
-            <button id="tap-game-btn" onclick="tapMeter()">Tap to Fill Love! ❤️</button>
+            <p class="subtitle">Mayur sent you an interactive gift box. Tap it to open!</p>
+            
+            <div class="gift-box" onclick="openGift()">🎁</div>
+            <p style="font-weight: bold; color: #ff4757;">Tap the gift 5 times!</p>
+            <p id="tap-count" style="font-size: 1.2em; font-weight: bold; color: #2f3542;">Taps Left: 5</p>
         </div>
 
-        <!-- SURPRISE SCREEN: Unlocked Photos and Love Notes -->
-        <div id="surprise-screen">
-            <h1>🎉 LOVE METER FULL! 🎉</h1>
-            <p class="subtitle">You unlocked Mayur's secret surprise, Namrata!</p>
+        <!-- STAGE 2: Animated Doodle Art Wall -->
+        <div id="stage-2" class="stage">
+            <h1>Our Journey Wall ✨</h1>
+            <p class="subtitle">Tap any memory card to see Mayur's note!</p>
 
-            <div class="gallery">
-                <div class="polaroid">
-                    <img src="IMG_2092_Original_99f5a4.jpg" alt="Us">
-                    <p>Walking together 💕</p>
+            <div class="card-grid">
+                <div class="art-card" onclick="alert('Mayur says: Every walk with you feels like a dream 💕')">
+                    <span class="art-icon">👩‍❤️‍👨</span>
+                    <p>Walking Together</p>
                 </div>
-                <div class="polaroid">
-                    <img src="IMG_0849_Original_99f5a4.jpg" alt="Us">
-                    <p>Sunny smiles 🌸</p>
+                <div class="art-card" onclick="alert('Mayur says: Your smile lights up my whole world 🌸')">
+                    <span class="art-icon">☀️</span>
+                    <p>Sunny Smiles</p>
                 </div>
-                <div class="polaroid">
-                    <img src="IMG_1455_Original_99f5a4.jpg" alt="Us">
-                    <p>Fun moments ✨</p>
+                <div class="art-card" onclick="alert('Mayur says: Life is 100x more fun with your laugh! ✨')">
+                    <span class="art-icon">🥳</span>
+                    <p>Fun Moments</p>
                 </div>
-                <div class="polaroid">
-                    <img src="IMG_1247_Original_99f5a4.jpg" alt="Us">
-                    <p>Forever us 🥰</p>
+                <div class="art-card" onclick="alert('Mayur says: You and me, always and forever 🥰')">
+                    <span class="art-icon">♾️</span>
+                    <p>Forever Us</p>
                 </div>
             </div>
 
-            <div class="final-letter">
-                <p><strong>Namrata,</strong></p>
-                <p>You make every single day brighter, happier, and full of love. Thank you for being you!</p>
-                <p><strong>With all my love, Mayur ❤️</strong></p>
-            </div>
-
-            <button onclick="location.reload()" style="margin-top: 20px; background: #747d8c; border:none; color:white; padding:10px 20px; border-radius:20px; cursor:pointer;">Play Again</button>
+            <button class="action-btn" onclick="goToStage(3)">Unlock Love Coupons 🎟️</button>
         </div>
+
+        <!-- STAGE 3: Redeemable Love Coupons -->
+        <div id="stage-3" class="stage">
+            <h1>Love Coupons 🎟️</h1>
+            <p class="subtitle">Tap any coupon to redeem it instantly with Mayur!</p>
+
+            <div class="coupon-btn" onclick="redeemCoupon('☕ 1x Coffee & Late Night Chat Date')">
+                <span>☕ Coffee & Long Talk Date</span> <span>Redeem ➔</span>
+            </div>
+            <div class="coupon-btn" onclick="redeemCoupon('🎬 1x Movie Night Choice (No Complaints!)')">
+                <span>🎬 Movie Choice Night</span> <span>Redeem ➔</span>
+            </div>
+            <div class="coupon-btn" onclick="redeemCoupon('💆‍♂️ 1x Relaxing Head or Back Massage')">
+                <span>💆‍♂️ Relaxing Massage</span> <span>Redeem ➔</span>
+            </div>
+            <div class="coupon-btn" onclick="redeemCoupon('🍕 1x Late Night Favorite Snack Delivery')">
+                <span>🍕 Late Night Treats</span> <span>Redeem ➔</span>
+            </div>
+
+            <button class="action-btn" onclick="goToStage(4)">Read Mayur's Letter 💌</button>
+        </div>
+
+        <!-- STAGE 4: Final Love Letter -->
+        <div id="stage-4" class="stage">
+            <h1>For My Dearest Namrata ❤️</h1>
+
+            <div class="letter-box">
+                <p><strong>Hi Namrata,</strong></p>
+                <p>Thank you for bringing so much brightness, joy, and laughter into my life. Every single moment shared with you is my absolute favorite.</p>
+                <p>You are my best friend, my happiness, and my favorite person in the world!</p>
+                <p style="text-align: right; font-weight: bold; margin-bottom: 0;">— Forever Yours, Mayur ❤️</p>
+            </div>
+
+            <button class="action-btn" onclick="confettiBlast()">Celebrate Us! 🎉</button>
+            <br>
+            <button onclick="goToStage(1)" style="margin-top: 15px; background: transparent; border: none; color: #747d8c; cursor: pointer; text-decoration: underline;">Replay Journey 🔄</button>
+        </div>
+
     </div>
 
     <script>
-        let currentProgress = 0;
-        const maxTaps = 10; // Total taps needed to win (10% per tap)
-        
-        const teasingNotes = [
-            "Mayur's heart just skipped a beat! 💓",
-            "Ooh, getting warmer! Keep tapping! 🔥",
-            "Stop being so cute, Namrata! 🥰",
-            "Mayur is smiling like an idiot right now. 😄",
-            "Almost there! Don't stop now! ✨",
-            "You really know how to make him happy! 💖",
-            "Just a little more love... 🌸",
-            "Can you feel how much he loves you? 💕",
-            "Almost at 100%! Get ready for the surprise! 🎁",
-            "🎉 BOOM! Love Meter Maxed Out! ❤️"
-        ];
+        let giftTaps = 5;
 
-        function tapMeter() {
-            if (currentProgress < maxTaps) {
-                currentProgress++;
-                let percent = currentProgress * 10;
+        function openGift() {
+            if (giftTaps > 1) {
+                giftTaps--;
+                document.getElementById('tap-count').innerText = `Taps Left: ${giftTaps}`;
                 
-                // Update progress bar
-                document.getElementById('progressBar').style.width = percent + '%';
-                document.getElementById('percentage').innerText = percent;
-
-                // Update teasing message
-                document.getElementById('tease-message').innerText = teasingNotes[currentProgress - 1];
-
-                // Check if finished
-                if (currentProgress === maxTaps) {
-                    setTimeout(() => {
-                        document.getElementById('game-screen').style.display = 'none';
-                        document.getElementById('surprise-screen').style.display = 'block';
-                    }, 800);
-                }
+                // Little shake vibration on tap
+                confetti({ particleCount: 15, spread: 40, origin: { y: 0.6 } });
+            } else {
+                confettiBlast();
+                goToStage(2);
             }
+        }
+
+        function goToStage(stageNum) {
+            document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+            document.getElementById(`stage-${stageNum}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function redeemCoupon(title) {
+            confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+            alert(`🎉 Coupon Redeemed for Namrata!\n\n${title}\n\nShow this screenshot to Mayur!`);
+        }
+
+        function confettiBlast() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.5 }
+            });
         }
     </script>
 
