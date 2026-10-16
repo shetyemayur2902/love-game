@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Love Story ❤️ Namrata & Mayur</title>
+    <title>The Love Meter for Namrata ❤️</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -31,81 +31,92 @@
         h1 { color: #ff4757; margin-bottom: 5px; font-size: 2.2em; }
         .subtitle { font-size: 1.05em; color: #747d8c; margin-bottom: 25px; }
 
-        .game-step { display: none; }
-        .game-step.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        /* Game Screen */
+        #game-screen { display: block; }
+        #surprise-screen { display: none; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Love Meter Styling */
+        .meter-box {
+            background: #fff0f3;
+            border: 2px dashed #ff4757;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background: #ffe3e8;
+            border-radius: 20px;
+            height: 25px;
+            margin: 15px 0;
+            overflow: hidden;
+            border: 1px solid #ff4757;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #ff4757;
+            transition: width 0.3s ease;
+            border-radius: 20px;
         }
 
-        button {
+        #tap-game-btn {
             background-color: #ff4757;
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 1.05em;
-            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
             font-weight: bold;
-            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            transition: 0.1s;
         }
-        button:hover { background-color: #ff6b81; transform: scale(1.05); }
+        #tap-game-btn:active { transform: scale(0.95); }
 
-        /* Photo Cards */
-        .photo-card {
-            background: white;
-            padding: 12px 12px 20px 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-            border-radius: 8px;
-            margin: 15px auto;
-            max-width: 320px;
-            transform: rotate(-1deg);
-        }
-        .photo-card img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            border-radius: 6px;
-        }
-        .photo-caption {
-            margin-top: 10px;
-            font-weight: 600;
+        #tease-message {
+            font-weight: bold;
             color: #2f3542;
-            font-size: 1.05em;
+            min-height: 30px;
+            margin-top: 15px;
+            font-size: 1.1em;
         }
 
-        /* Options for choices */
-        .choices {
-            display: flex;
-            justify-content: center;
+        /* Surprise Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-top: 20px;
         }
-        .choice-btn {
-            background: #fff0f3;
-            color: #ff4757;
-            border: 2px solid #ff4757;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
+        .polaroid {
+            background: white;
+            padding: 10px 10px 15px 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            transform: rotate(-1deg);
         }
-        .choice-btn:hover {
-            background: #ff4757;
-            color: white;
+        .polaroid:nth-child(even) { transform: rotate(2deg); }
+        .polaroid img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .polaroid p {
+            margin: 8px 0 0;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #2f3542;
         }
 
-        .love-note-box {
+        .final-letter {
             background: #fff0f3;
-            border: 1px dashed #ff4757;
+            border: 1px solid #ff4757;
             padding: 15px;
             border-radius: 12px;
-            margin: 15px 0;
-            font-size: 1.1em;
+            margin-top: 20px;
+            font-size: 1em;
             color: #2f3542;
         }
     </style>
@@ -113,90 +124,93 @@
 <body>
 
     <div class="container">
-        <h1>For Namrata ❤️</h1>
-        <p class="subtitle">A little romantic journey made with love by Mayur</p>
+        <!-- GAME SCREEN: Tap to fill love meter -->
+        <div id="game-screen">
+            <h1>Hey Namrata! 💕</h1>
+            <p class="subtitle">Mayur built a tiny game just for you. Can you fill the Love Meter?</p>
 
-        <!-- STEP 1: Welcome & First Memory -->
-        <div id="step-1" class="game-step active">
-            <h3>Chapter 1: Where It All Feels Special</h3>
-            <div class="photo-card">
-                <img src="IMG_2092_Original_99f5a4.jpg" alt="Us">
-                <div class="photo-caption">Walking side by side with you 💕</div>
+            <div class="meter-box">
+                <p style="margin: 0; font-weight: bold; color: #ff4757;">Love Level: <span id="percentage">0</span>%</p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p id="tease-message">Tap the button below to send love to Mayur!</p>
             </div>
-            <p class="love-note-box">"Every single moment spent walking through life with you feels like magic, Namrata."</p>
-            <button onclick="nextStep(2)">Continue Our Journey ➔</button>
+
+            <button id="tap-game-btn" onclick="tapMeter()">Tap to Fill Love! ❤️</button>
         </div>
 
-        <!-- STEP 2: Sweet Choice Game -->
-        <div id="step-2" class="game-step">
-            <h3>Chapter 2: A Quick Question for Namrata</h3>
-            <p style="font-size: 1.1em; margin: 20px 0;">Who loves Namrata the absolute most in this entire world?</p>
-            <div class="choices">
-                <button class="choice-btn" onclick="rightAnswer()">Mayur! 🥰</button>
-                <button class="choice-btn" onclick="rightAnswer()">Definitely Mayur ❤️</button>
-            </div>
-            <p id="choice-feedback" style="margin-top: 15px; font-weight: bold; color: #ff4757;"></p>
-        </div>
+        <!-- SURPRISE SCREEN: Unlocked Photos and Love Notes -->
+        <div id="surprise-screen">
+            <h1>🎉 LOVE METER FULL! 🎉</h1>
+            <p class="subtitle">You unlocked Mayur's secret surprise, Namrata!</p>
 
-        <!-- STEP 3: Second Memory & Note -->
-        <div id="step-3" class="game-step">
-            <h3>Chapter 3: Sunshine & Smiles</h3>
-            <div class="photo-card" style="transform: rotate(2deg);">
-                <img src="IMG_0849_Original_99f5a4.jpg" alt="Us">
-                <div class="photo-caption">Your smile is my favorite view 🌸</div>
+            <div class="gallery">
+                <div class="polaroid">
+                    <img src="IMG_2092_Original_99f5a4.jpg" alt="Us">
+                    <p>Walking together 💕</p>
+                </div>
+                <div class="polaroid">
+                    <img src="IMG_0849_Original_99f5a4.jpg" alt="Us">
+                    <p>Sunny smiles 🌸</p>
+                </div>
+                <div class="polaroid">
+                    <img src="IMG_1455_Original_99f5a4.jpg" alt="Us">
+                    <p>Fun moments ✨</p>
+                </div>
+                <div class="polaroid">
+                    <img src="IMG_1247_Original_99f5a4.jpg" alt="Us">
+                    <p>Forever us 🥰</p>
+                </div>
             </div>
-            <p class="love-note-box">"You light up even the ordinary days and make them unforgettable."</p>
-            <button onclick="nextStep(4)">Next Surprise ➔</button>
-        </div>
 
-        <!-- STEP 4: Fun Playful Memory -->
-        <div id="step-4" class="game-step">
-            <h3>Chapter 4: Endless Laughter</h3>
-            <div class="photo-card" style="transform: rotate(-1.5deg);">
-                <img src="IMG_1455_Original_99f5a4.jpg" alt="Us">
-                <div class="photo-caption">Fun moments & goofiness ✨</div>
-            </div>
-            <p class="love-note-box">"Life is so much more joyful and beautiful with your laughter in it."</p>
-            <button onclick="nextStep(5)">One Last Memory ➔</button>
-        </div>
-
-        <!-- STEP 5: Final Romantic Reveal -->
-        <div id="step-5" class="game-step">
-            <h3>Final Chapter: Forever Us ❤️</h3>
-            <div class="photo-card" style="transform: rotate(1deg);">
-                <img src="IMG_1247_Original_99f5a4.jpg" alt="Us">
-                <div class="photo-caption">My safe place & my favorite person 🥰</div>
-            </div>
-            <div class="love-note-box" style="background: #ffe3e8; border: 2px solid #ff4757;">
+            <div class="final-letter">
                 <p><strong>Namrata,</strong></p>
-                <p>Thank you for being my greatest adventure, my comfort, and my best friend. No matter where life takes us, my favorite place will always be right by your side.</p>
-                <p><strong>Forever yours, Mayur ❤️</strong></p>
+                <p>You make every single day brighter, happier, and full of love. Thank you for being you!</p>
+                <p><strong>With all my love, Mayur ❤️</strong></p>
             </div>
-            <button onclick="restartJourney()">Play Again 💌</button>
-        </div>
 
+            <button onclick="location.reload()" style="margin-top: 20px; background: #747d8c; border:none; color:white; padding:10px 20px; border-radius:20px; cursor:pointer;">Play Again</button>
+        </div>
     </div>
 
     <script>
-        function nextStep(stepNumber) {
-            // Hide all steps
-            const steps = document.querySelectorAll('.game-step');
-            steps.forEach(step => step.classList.remove('active'));
+        let currentProgress = 0;
+        const maxTaps = 10; // Total taps needed to win (10% per tap)
+        
+        const teasingNotes = [
+            "Mayur's heart just skipped a beat! 💓",
+            "Ooh, getting warmer! Keep tapping! 🔥",
+            "Stop being so cute, Namrata! 🥰",
+            "Mayur is smiling like an idiot right now. 😄",
+            "Almost there! Don't stop now! ✨",
+            "You really know how to make him happy! 💖",
+            "Just a little more love... 🌸",
+            "Can you feel how much he loves you? 💕",
+            "Almost at 100%! Get ready for the surprise! 🎁",
+            "🎉 BOOM! Love Meter Maxed Out! ❤️"
+        ];
 
-            // Show target step
-            document.getElementById(`step-${stepNumber}`).classList.add('active');
-        }
+        function tapMeter() {
+            if (currentProgress < maxTaps) {
+                currentProgress++;
+                let percent = currentProgress * 10;
+                
+                // Update progress bar
+                document.getElementById('progressBar').style.width = percent + '%';
+                document.getElementById('percentage').innerText = percent;
 
-        function rightAnswer() {
-            document.getElementById('choice-feedback').innerText = "Correct! 🥰 You know him so well!";
-            setTimeout(() => {
-                nextStep(3);
-            }, 1200);
-        }
+                // Update teasing message
+                document.getElementById('tease-message').innerText = teasingNotes[currentProgress - 1];
 
-        function restartJourney() {
-            nextStep(1);
-            document.getElementById('choice-feedback').innerText = "";
+                // Check if finished
+                if (currentProgress === maxTaps) {
+                    setTimeout(() => {
+                        document.getElementById('game-screen').style.display = 'none';
+                        document.getElementById('surprise-screen').style.display = 'block';
+                    }, 800);
+                }
+            }
         }
     </script>
 
