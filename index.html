@@ -1,489 +1,173 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namrata & Mayur | Our Love Story ❤️</title>
-    <!-- Canvas Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #feada6 100%);
-            color: #2f3542;
-            margin: 0;
-            padding: 20px 10px;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Floating Particles */
-        .particle {
-            position: fixed;
-            color: rgba(255, 71, 87, 0.35);
-            font-size: 22px;
-            user-select: none;
-            pointer-events: none;
-            animation: floatUp 5s linear infinite;
-            z-index: 0;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg) scale(1.3); opacity: 0; }
-        }
-
-        .main-wrapper {
-            max-width: 650px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Card Container */
-        .section-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 25px;
-            padding: 30px 20px;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(255, 71, 87, 0.2);
-            border: 2px solid #ffffff;
-            transition: transform 0.3s ease;
-        }
-
-        h1 { color: #ff4757; margin-bottom: 5px; font-size: 2.2em; }
-        h2 { color: #ff4757; margin-top: 0; font-size: 1.6em; }
-        .subtitle { font-size: 1.05em; color: #57606f; margin-bottom: 20px; }
-
-        /* General Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 1.05em;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.35);
-            transition: all 0.2s ease;
-            margin-top: 10px;
-        }
-        .btn-primary:hover { transform: scale(1.05); }
-        .btn-primary:active { transform: scale(0.95); }
-
-        /* Section 1: Music Player */
-        .music-bar {
-            background: #fff0f3;
-            border: 2px dashed #ff4757;
-            border-radius: 20px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        /* Section 2: Runaway Challenge */
-        .runaway-box {
-            position: relative;
-            min-height: 120px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-        }
-        #btn-no {
-            background: #a4b0be;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            position: absolute;
-            transition: 0.1s ease;
-        }
-
-        /* Section 3: Love Meter */
-        .meter-container {
-            background: #ffe3e8;
-            border-radius: 20px;
-            height: 28px;
-            overflow: hidden;
-            border: 2px solid #ff4757;
-            margin: 15px 0;
-            position: relative;
-        }
-        .meter-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b81, #ff4757);
-            transition: width 0.3s ease;
-        }
-
-        /* Section 4: Memory Grid Flip Cards */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .flip-card {
-            background-color: transparent;
-            height: 180px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flip-card.flipped .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-        .flip-front, .flip-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-        }
-        .flip-front {
-            background: #ffffff;
-            border: 2px solid #ffd8e1;
-        }
-        .flip-back {
-            background: #ff4757;
-            color: white;
-            transform: rotateY(180deg);
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-
-        /* Section 5: Quiz Challenge */
-        .quiz-option {
-            background: #fff0f3;
-            border: 2px solid #ffd8e1;
-            border-radius: 15px;
-            padding: 12px;
-            margin: 10px 0;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .quiz-option:hover {
-            border-color: #ff4757;
-            background: #ffe3e8;
-        }
-
-        /* Coupons Grid */
-        .coupon-card {
-            background: #ffffff;
-            border: 2px dashed #ff4757;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 10px 0;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .coupon-card:hover { background: #ffe3e8; }
-
-        /* Countdown Box */
-        .timer-box {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-        .time-unit {
-            background: #fff0f3;
-            padding: 10px 15px;
-            border-radius: 12px;
-            border: 1px solid #ffd8e1;
-        }
-        .time-unit span {
-            display: block;
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #ff4757;
-        }
-
-        /* Love Letter Container */
-        .letter-box {
-            background: #fff0f3;
-            border: 2px solid #ff4757;
-            padding: 22px;
-            border-radius: 20px;
-            text-align: left;
-            line-height: 1.6;
-            margin-top: 15px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#170d26">
+<title>HER OS ✦ Namrata</title>
+<style>
+:root{--bg:#100a1c;--pink:#ff8fc8;--lav:#c7a7ff;--cream:#fff4fb;--muted:#c9b9d5;--line:#ffffff20}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 15% 0%,#462044,transparent 42%),radial-gradient(ellipse at 100% 35%,#282052,transparent 40%),var(--bg);color:var(--cream);font-family:system-ui,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}
+.wrap{width:min(1050px,calc(100% - 28px));margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--line);gap:10px}
+.brand{font-weight:900;letter-spacing:2px}
+.brand span{color:var(--pink)}
+.pill{font-size:11px;border:1px solid #ff8fc855;padding:8px;border-radius:99px;color:#ffd3e9}
+.hero{padding:48px 0 30px;display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--pink);font-weight:800}
+h1{font-size:clamp(42px,8vw,78px);line-height:.98;letter-spacing:-3px;margin:14px 0}
+h1 em{font-style:normal;color:var(--pink)}
+.lead{font-size:17px;line-height:1.8;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{border:1px solid #ffffff20;border-radius:14px;padding:12px 16px;background:linear-gradient(135deg,var(--pink),var(--lav));color:#24102a;font-weight:800}
+.btn.alt{background:#ffffff0b;color:var(--cream)}
+.orb{aspect-ratio:1;border:1px solid var(--line);border-radius:30px;background:#ff8fc815;display:grid;place-items:center}
+.heart{font-size:clamp(90px,17vw,160px);animation:pulse 2s infinite;filter:drop-shadow(0 0 30px #ff72c6aa)}
+@keyframes pulse{50%{transform:scale(1.09)}}
+section{padding:30px 0}
+.head{margin-bottom:16px}
+h2{font-size:clamp(25px,5vw,35px);margin:8px 0}
+.sub,.panel p{color:var(--muted);line-height:1.75}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.panel{border:1px solid var(--line);background:#ffffff08;border-radius:21px;padding:19px}
+.icon{font-size:28px}
+.panel h3{margin:10px 0 5px}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.choice{background:#ffffff0a;color:var(--cream);border:1px solid var(--line);padding:11px 13px;border-radius:12px}
+.choice.active{border-color:var(--pink);background:#ff8fc822}
+.output{margin-top:12px;padding:14px;background:#c7a7ff12;border:1px solid #c7a7ff35;border-radius:13px;line-height:1.7;min-height:48px}
+.timeline{display:grid;gap:15px}
+.moment{display:grid;grid-template-columns:38px 1fr;gap:10px}
+.meter{height:8px;background:#ffffff15;border-radius:99px;overflow:hidden;margin:12px 0}
+.meter div{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--lav));transition:width .3s}
+.count{font-size:34px;font-weight:900;color:var(--pink)}
+.footer{text-align:center;padding:35px 0 48px;color:var(--muted);font-size:13px}
+#toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,20px);opacity:0;background:#fff2fa;color:#4b2041;padding:13px 18px;border-radius:14px;transition:.25s;z-index:5;text-align:center;width:max-content;max-width:90%}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.fall{position:fixed;top:-25px;z-index:6;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(400deg);opacity:0}}
+@media(max-width:700px){.hero{grid-template-columns:1fr}.orb{min-height:200px}.grid{grid-template-columns:1fr}h1{letter-spacing:-2px}}
+</style>
 </head>
 <body>
+<header class="wrap top">
+<div class="brand">HER <span>OS</span> ✦</div>
+<div class="pill">SPECIAL USER: NAMRATA ♡</div>
+</header>
 
-    <!-- Floating Background Particles -->
-    <script>
-        for(let i=0; i<16; i++) {
-            let p = document.createElement('div');
-            p.className = 'particle';
-            p.innerHTML = ['❤️', '💖', '✨', '🌸', '💕'][Math.floor(Math.random()*5)];
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDelay = Math.random() * 5 + 's';
-            p.style.fontSize = (15 + Math.random() * 15) + 'px';
-            document.body.appendChild(p);
-        }
-    </script>
+<main class="wrap">
+<section class="hero">
+<div>
+<div class="eyebrow">A VERY PERSONAL LITTLE UNIVERSE</div>
+<h1>Hey, <em>Namrata.</em><br>This one's yours.</h1>
+<p class="lead">A tiny corner of the internet made to remind you that you're loved, appreciated, and wonderfully, unmistakably you. Built by Mayur, with a soft heart and a lot to say. 💗</p>
+<div class="actions">
+<button class="btn" onclick="go('dashboard')">Enter your universe ✨</button>
+<button class="btn alt" onclick="toast('System note: Mayur thinks you are ridiculously special. 💌')">Check notifications ♡</button>
+</div>
+</div>
+<div class="orb"><div class="heart">💗</div></div>
+</section>
 
-    <div class="main-wrapper">
+<section id="dashboard">
+<div class="head"><div class="eyebrow">YOUR DASHBOARD</div><h2>Today's gentle reminders</h2><p class="sub">No pressure. Just a little love.</p></div>
+<div class="grid">
+<article class="panel"><div class="icon">🌷</div><h3>You are enough.</h3><p>You don't have to earn rest, kindness, love, or extra care.</p></article>
+<article class="panel"><div class="icon">🌙</div><h3>Take your time.</h3><p>Big feelings are allowed. Pause, breathe, and move at your own pace.</p></article>
+<article class="panel"><div class="icon">💌</div><h3>You matter to me.</h3><p>Not only on your happiest days. You matter on the quiet, messy ones too.</p></article>
+</div>
+</section>
 
-        <!-- HEADER SECTION -->
-        <div class="section-card">
-            <h1>Hey Namrata! 💕</h1>
-            <p class="subtitle">Welcome to your personal digital kingdom, created with all my love by Mayur.</p>
-            
-            <div class="music-bar">
-                <span style="font-size: 1.5em;">🎵</span>
-                <span style="font-size: 0.9em; font-weight: bold;">Romantic Atmosphere</span>
-                <button onclick="toggleMusic()" id="music-btn" style="background:#ff4757; color:white; border:none; padding:8px 15px; border-radius:20px; cursor:pointer; font-weight:bold;">Play Music 🔊</button>
-            </div>
-            <audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=sweet-love-111578.mp3"></audio>
-        </div>
+<section id="little">
+<div class="head"><div class="eyebrow">THE LITTLE THINGS</div><h2>Tap for a tiny reminder</h2><p class="sub">Pick whichever your heart needs today.</p></div>
+<div class="panel">
+<div class="choices">
+<button class="choice" onclick="reveal('comfort',this)">🫂 I need comfort</button>
+<button class="choice" onclick="reveal('smile',this)">🌸 Make me smile</button>
+<button class="choice" onclick="reveal('love',this)">💗 Remind me I'm loved</button>
+<button class="choice" onclick="reveal('brave',this)">✨ I need courage</button>
+</div>
+<div id="reminder" class="output" aria-live="polite">Your little message will appear here. ♡</div>
+</div>
+</section>
 
-        <!-- SECTION 1: THE RUNAWAY QUESTION -->
-        <div class="section-card">
-            <h2>Chapter 1: Quick Question 🤔</h2>
-            <p style="font-size: 1.1em; font-weight: bold;">Do you know how much Mayur loves you?</p>
+<section id="meter">
+<div class="head"><div class="eyebrow">COMPLETELY UNOFFICIAL SCIENCE</div><h2>Mayur's affection meter</h2><p class="sub">Warning: the scale may be insufficient.</p></div>
+<div class="panel">
+<strong>Affection detected: ∞ AND COUNTING</strong>
+<div class="meter"><div id="fill"></div></div>
+<p>The calculator tried to measure it and asked for a bigger number. 💞</p>
+<button class="btn" onclick="boost()">Increase affection +1 💗</button>
+<div class="count" id="count">∞</div>
+<p id="countText">Starting value: more than this website can handle.</p>
+</div>
+</section>
 
-            <div class="runaway-box">
-                <button class="btn-primary" onclick="answerRunaway('yes')">Yes, infinity! 🥰</button>
-                <button id="btn-no" onmouseover="dodgeButton()" onclick="dodgeButton()">Not really 😜</button>
-            </div>
-            <p id="runaway-feedback" style="font-weight: bold; color: #ff4757; margin-top: 10px;"></p>
-        </div>
+<section id="comfort">
+<div class="head"><div class="eyebrow">YOUR COMFORT MENU</div><h2>If I could be there right now…</h2></div>
+<div class="grid">
+<article class="panel"><div class="icon">🫂</div><h3>A proper hug</h3><p>The kind where nobody needs to say anything until they're ready.</p><button class="choice" onclick="comfortChoice('hug')">Choose this</button></article>
+<article class="panel"><div class="icon">🍫</div><h3>Snack delivery</h3><p>Your favourite treat, with no judgement about the quantity.</p><button class="choice" onclick="comfortChoice('snack')">Choose this</button></article>
+<article class="panel"><div class="icon">☕</div><h3>Quiet company</h3><p>A warm drink, a calm moment, and space to say what you need.</p><button class="choice" onclick="comfortChoice('company')">Choose this</button></article>
+</div>
+<div id="comfortOut" class="output">Choose your comfort. This is a judgement-free zone. ♡</div>
+</section>
 
-        <!-- SECTION 2: LOVE METER MINIGAME -->
-        <div class="section-card">
-            <h2>Chapter 2: The Love Meter 💓</h2>
-            <p class="subtitle">Tap the heart to fill Mayur's love meter to 100%!</p>
+<section>
+<div class="head"><div class="eyebrow">A NOTE FROM MAYUR</div><h2>Something I want you to know</h2></div>
+<div class="panel timeline">
+<div class="moment"><div class="icon">🤍</div><div><strong>Your feelings deserve room.</strong><p>I don't want you to hide what hurts or pretend you're okay.</p></div></div>
+<div class="moment"><div class="icon">👂</div><div><strong>I want to listen properly.</strong><p>Not just wait for my turn to talk, but understand what you mean and need.</p></div></div>
+<div class="moment"><div class="icon">🌱</div><div><strong>Care should show up in actions.</strong><p>Sweet words are nice. Taking responsibility and doing better matter too.</p></div></div>
+</div>
+</section>
 
-            <p style="font-weight: bold; color: #ff4757; margin-bottom: 5px;">Love Level: <span id="meter-num">0</span>%</p>
-            <div class="meter-container">
-                <div class="meter-fill" id="meter-bar"></div>
-            </div>
+<section id="letter">
+<div class="head"><div class="eyebrow">OPEN WHEN YOU FEEL READY</div><h2>A little letter for you 💌</h2></div>
+<div class="panel">
+<p>Namrata,</p>
+<p>I made this little space because I wanted to give you something that feels like a hug you can open whenever you need it. You're important to me, and I never want a disagreement to make you doubt that.</p>
+<p>If I've hurt you, I'm sorry. I don't expect a website or a few pretty words to magically fix everything. I want to hear you, understand you, and show you through my actions that your feelings matter to me.</p>
+<p>You don't have to reply right away. Take your time. Whenever you're ready, I'd like to talk and listen with an open heart.</p>
+<p style="font-weight:800;color:var(--pink)">With love, Mayur ♡</p>
+<button class="btn" onclick="sparkle()">Send a little sparkle ✨</button>
+</div>
+</section>
 
-            <p id="meter-msg" style="min-height: 24px; font-weight: bold; color: #2f3542;"></p>
-            <button class="btn-primary" onclick="tapLoveMeter()">Tap to Send Love ❤️</button>
-        </div>
+<section>
+<div class="panel" style="text-align:center;padding:30px 20px">
+<div class="eyebrow">END OF TRANSMISSION</div><div class="heart" style="font-size:70px">💖</div>
+<h2>Still rooting for your smile.</h2>
+<p class="sub">You deserve gentleness, honesty, laughter, and little things that make a day lighter.</p>
+<button class="btn" onclick="finale()">One last surprise ♡</button>
+<p id="final" class="sub" aria-live="polite"></p>
+</div>
+</section>
+</main>
+<footer class="wrap footer">Made for Namrata, with love from Mayur · HER OS v1.0 ✦</footer>
+<div id="toast" role="status"></div>
 
-        <!-- SECTION 3: MEMORY FLIP CARDS -->
-        <div class="section-card">
-            <h2>Chapter 3: Interactive Memory Wall ✨</h2>
-            <p class="subtitle">Tap any card to flip it over and read Mayur's note!</p>
-
-            <div class="memory-grid">
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <span style="font-size: 40px;">👩‍❤️‍👨</span>
-                            <p style="font-weight: bold; margin-top: 5px;">Walking Side-by-Side</p>
-                        </div>
-                        <div class="flip-back">
-                            <p>"Every single walk with you feels like my favorite journey."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <span style="font-size: 40px;">🌸</span>
-                            <p style="font-weight: bold; margin-top: 5px;">Sunny Smiles</p>
-                        </div>
-                        <div class="flip-back">
-                            <p>"Your smile can turn even the cloudiest day bright and warm."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <span style="font-size: 40px;">🥳</span>
-                            <p style="font-weight: bold; margin-top: 5px;">Pure Goofiness</p>
-                        </div>
-                        <div class="flip-back">
-                            <p>"Life is 100x more fun when we are laughing together."</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                    <div class="flip-card-inner">
-                        <div class="flip-front">
-                            <span style="font-size: 40px;">♾️</span>
-                            <p style="font-weight: bold; margin-top: 5px;">Forever Us</p>
-                        </div>
-                        <div class="flip-back">
-                            <p>"My favorite place in the whole wide world is right next to you."</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SECTION 4: RELATIONSHIP TRIVIA QUIZ -->
-        <div class="section-card">
-            <h2>Chapter 4: Relationship Quiz 🎯</h2>
-            <p class="subtitle">Answer correctly to unlock Mayur's custom love coupons!</p>
-
-            <p style="font-weight: bold;" id="quiz-question">Question: Who is Mayur's favorite person in the entire universe?</p>
-            <div id="quiz-options">
-                <div class="quiz-option" onclick="checkQuiz(true)">A) Namrata 💕</div>
-                <div class="quiz-option" onclick="checkQuiz(true)">B) Definitely Namrata 🥰</div>
-                <div class="quiz-option" onclick="checkQuiz(true)">C) Always Namrata ✨</div>
-            </div>
-            <p id="quiz-feedback" style="font-weight: bold; color: #ff4757; margin-top: 10px;"></p>
-        </div>
-
-        <!-- SECTION 5: LOVE COUPONS -->
-        <div class="section-card" id="coupon-section" style="display: none;">
-            <h2>Chapter 5: Unlocked Love Coupons 🎟️</h2>
-            <p class="subtitle">Tap any coupon to redeem it immediately with Mayur!</p>
-
-            <div class="coupon-card" onclick="redeem('☕ 1x Long Talk & Coffee Date')">☕ 1x Long Talk & Coffee Date</div>
-            <div class="coupon-card" onclick="redeem('🎬 1x Movie Night Choice (No Complaints!)')">🎬 1x Movie Night Choice</div>
-            <div class="coupon-card" onclick="redeem('💆‍♂️ 1x Relaxing Head or Back Massage')">💆‍♂️ 1x Relaxing Massage</div>
-            <div class="coupon-card" onclick="redeem('🍕 1x Late Night Favorite Treat')">🍕 1x Late Night Favorite Treat</div>
-        </div>
-
-        <!-- SECTION 6: RANDOM COMPLIMENT JAR -->
-        <div class="section-card">
-            <h2>Chapter 6: The Infinite Reason Jar 🫙</h2>
-            <p class="subtitle">Click the jar anytime you want a random sweet message!</p>
-
-            <div style="font-size: 70px; cursor: pointer;" onclick="getReason()">🫙</div>
-            <p id="reason-text" style="font-weight: bold; color: #ff4757; min-height: 30px; margin-top: 10px;">Tap the jar to draw a note!</p>
-        </div>
-
-        <!-- SECTION 7: FINAL LOVE LETTER -->
-        <div class="section-card">
-            <h2>Final Chapter: For My Dearest Namrata ❤️</h2>
-
-            <div class="letter-box">
-                <p><strong>Hi Namrata,</strong></p>
-                <p>Thank you for bringing so much light, comfort, and pure joy into my life. Every single moment shared with you is a memory I treasure deeply.</p>
-                <p>You are my best friend, my greatest happiness, and my favorite person in the entire world.</p>
-                <p style="text-align: right; font-weight: bold; margin-bottom: 0;">— Forever yours, Mayur ❤️</p>
-            </div>
-
-            <button class="btn-primary" onclick="confettiBurst()" style="margin-top: 20px;">Celebrate Us! 🎉</button>
-        </div>
-
-    </div>
-
-    <!-- JavaScript Logic -->
-    <script>
-        // Music Player Toggle
-        function toggleMusic() {
-            const music = document.getElementById('bg-music');
-            const btn = document.getElementById('music-btn');
-            if (music.paused) {
-                music.play();
-                btn.innerText = "Pause Music ⏸️";
-            } else {
-                music.pause();
-                btn.innerText = "Play Music 🔊";
-            }
-        }
-
-        // Runaway Button Logic
-        function dodgeButton() {
-            const btn = document.getElementById('btn-no');
-            const x = (Math.random() - 0.5) * 200;
-            const y = (Math.random() - 0.5) * 80;
-            btn.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        function answerRunaway(ans) {
-            document.getElementById('runaway-feedback').innerText = "Correct answer! 🥰 Mayur loves you beyond measure!";
-            confetti({ particleCount: 50, spread: 50, origin: { y: 0.3 } });
-        }
-
-        // Love Meter Logic
-        let meterVal = 0;
-        const msgs = [
-            "Sending love to Mayur... 💓",
-            "Getting warmer! 🔥",
-            "You are making Mayur smile! 😄",
-            "Keep tapping! ✨",
-            "Almost 100%! 💕",
-            "🎉 LOVE METER MAXED OUT! 🎉"
-        ];
-
-        function tapLoveMeter() {
-            if (meterVal < 100) {
-                meterVal += 20;
-                document.getElementById('meter-bar').style.width = meterVal + '%';
-                document.getElementById('meter-num').innerText = meterVal;
-                
-                let idx = Math.min(Math.floor(meterVal / 20) - 1, msgs.length - 1);
-                document.getElementById('meter-msg').innerText = msgs[idx];
-
-                if (meterVal === 100) {
-                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.5 } });
-                }
-            }
-        }
-
-        // Quiz Logic
-        function checkQuiz(isCorrect) {
-            document.getElementById('quiz-feedback').innerText = "🎉 Correct! You unlocked your Love Coupons below!";
-            document.getElementById('coupon-section').style.display = 'block';
-            confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
-        }
-
-        // Coupon Redeem
-        function redeem(title) {
-            confetti({ particleCount: 50, spread: 50, origin: { y: 0.7 } });
-            alert(`🎉 Coupon Redeemed for Namrata!\n\n${title}\n\nShow this screenshot to Mayur!`);
-        }
-
-        // Reason Jar Logic
-        const reasons = [
-            "Your laughter is Mayur's favorite sound in the world.",
-            "You make even simple walks feel like a grand adventure.",
-            "Your kindness and warmth light up every room.",
-            "You are Mayur's favorite notification and favorite person.",
-            "Life is simply 100x better with you by my side."
-        ];
-
-        function getReason() {
-            const rand = reasons[Math.floor(Math.random() * reasons.length)];
-            document.getElementById('reason-text').innerText = rand;
-            confetti({ particleCount: 20, spread: 30, origin: { y: 0.8 } });
-        }
-
-        // Final Confetti Burst
-        function confettiBurst() {
-            confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-        }
-    </script>
-
+<script>
+const notes={
+comfort:"Take one slow breath, loosen your shoulders, and give yourself permission not to solve everything this second. You deserve care, too. 🫂",
+smile:"Breaking news: Namrata has been reported being adorable again. Sources confirm: extremely cute, absolutely iconic. 🌸",
+love:"You don't have to be perfect to be loved. You don't have to be cheerful to be cared for. You matter just as you are. 💗",
+brave:"You don't need to do everything at once. Just the next small thing is enough. You've got this. ✨"
+};
+function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
+function toast(s){const t=document.getElementById("toast");t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800)}
+function reveal(k,b){document.getElementById("reminder").textContent=notes[k];document.querySelectorAll("#little .choice").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
+let n=0;
+function boost(){n++;document.getElementById("fill").style.width=Math.min(100,n*17)+"%";document.getElementById("count").textContent=n>5?"∞":"+"+n;document.getElementById("countText").textContent=n>5?"Conclusion: Namrata is statistically impossible to stop loving.":"The system confirms: one more reason to smile. 💞"}
+function comfortChoice(k){const m={hug:"Hug selected. 🫂 Imagine the warmest, safest hug — no rush to let go.",snack:"Snack delivery selected. 🍫 One delicious treat, coming right up in imagination.",company:"Quiet company selected. ☕ We can sit together, talk, or enjoy the silence."};document.getElementById("comfortOut").textContent=m[k]}
+function shower(){for(let i=0;i<32;i++)setTimeout(()=>{const e=document.createElement("span");e.className="fall";e.textContent=["💗","✨","🌸","💕","♡"][Math.floor(Math.random()*5)];e.style.left=Math.random()*100+"vw";e.style.animationDuration=(3+Math.random()*3)+"s";e.style.fontSize=(16+Math.random()*24)+"px";document.body.appendChild(e);setTimeout(()=>e.remove(),6500)},i*65)}
+function sparkle(){toast("A little love, a little sparkle, and a very big hug from Mayur. 💌");shower()}
+function finale(){document.getElementById("final").textContent="Surprise unlocked: you are appreciated more than this tiny screen can say. 💖";shower()}
+</script>
 </body>
 </html>
+
